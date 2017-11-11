@@ -8,7 +8,7 @@ class GameUser(models.Model):
 
 class Game(models.Model):
     user1 = models.ForeignKey(GameUser, related_name='user1_rel')
-    user2 = models.ForeignKey(GameUser, related_name='user2_rel', blank=True)
+    user2 = models.ForeignKey(GameUser, related_name='user2_rel', blank=True, null=True)
     user1_points = models.IntegerField(null=True, blank=True)
     user2_points = models.IntegerField(null=True, blank=True)
     board = models.TextField(null=True, blank=True)
