@@ -14,5 +14,8 @@ def add_user(request):
 
 
 def show_board(request, game_id, token):
-
-    return render(request, 'game.html')
+    game = Game.objects.get(pk=game_id)
+    return render(request, 'game.html', {
+        'board': game.board,
+        'board_solved' : game.board_solved
+    })
