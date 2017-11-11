@@ -11,7 +11,7 @@ function Sudoku(params) {
     this.END = 2;
 
     this.board = params.board;
-    this.boardSolution = params.boardSolution;
+    this.boardSolution = params.board_solved;
 
     this.id = params.id || 'sudoku_container';
     this.displaySolution = params.displaySolution || 0;
@@ -92,7 +92,7 @@ Sudoku.prototype.drawBoard = function(){
         for (j=0; j < this.nn; j++) {
             position       = { x: i+1, y: j+1 };
             group_position = { x: Math.floor((position.x -1)/this.n), y: Math.floor((position.y-1)/this.n) };
-
+            //console.log(this.boardSolution);
             var value = (this.board[index] > 0 ? this.board[index] : ''),
                 value_solution = (this.boardSolution[index] > 0 ? this.boardSolution[index] : ''),
                 cell = $('<div></div>')
@@ -448,7 +448,7 @@ $(function() {
 
     //init
     $('head').append('<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,height=device-height,target-densitydpi=device-dpi,user-scalable=yes" />');
-    console.log(GLOBALS.BOARD);
+    console.log(GLOBALS.BOARD_SOLVED);
     //game
     var game = new Sudoku({
                     id: 'sudoku_container',
