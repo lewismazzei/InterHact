@@ -11,7 +11,7 @@ function Sudoku(params) {
     this.END = 2;
 
     this.board = params.board;
-    this.boardSolution = params.board_solved;
+    this.boardSolution = params.board_solved    ;
 
     this.id = params.id || 'sudoku_container';
     this.displaySolution = params.displaySolution || 0;
@@ -51,25 +51,6 @@ Sudoku.prototype.timer = function() {
     this.secondsElapsed++;
     $('.time').text( '' + this.secondsElapsed );
   }
-};
-
-/**
-Shuffle array
-*/
-Sudoku.prototype.shuffle = function(array) {
-    var currentIndex   = array.length,
-        temporaryValue = 0,
-        randomIndex = 0;
-
-    while (0 !== currentIndex) {
-        randomIndex   = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue      = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex]  = temporaryValue;
-     }
-
-    return array;
 };
 
 /**
