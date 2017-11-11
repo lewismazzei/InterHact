@@ -3,12 +3,15 @@ import logging
 import json
 import copy
 import random
+from itertools import chain
 
 from django.shortcuts import render
 from django.core.exceptions import SuspiciousOperation
 
 from sudoku.models import GameUser, Game
 from sudoku.generator import make_board
+
+from ciscosparkapi.api.messages import MessagesAPI
 
 
 logger = logging.getLogger(__name__)
@@ -23,7 +26,11 @@ def create_game(request, token, email):
     solved[random.randint(0, 8)][random.randint(0, 8)] = 0
     solved[random.randint(0, 8)][random.randint(0, 8)] = 0
 
-    Game.objects.create(user1=user, board=json.dumps(unsolved), board_solved=json.dumps(solved))
+    unsolved_json = json.dumps(list(chain.from_iterable(unsolved)))
+    solved_json = json.dumps(list(chain.from_iterable(solved)))
+
+    Game.objects.create(user1=user, board=unsolved_json, board_solved=solved_json)
+
     return render(request, 'waiting.html')
 
 
