@@ -22,9 +22,9 @@ def create_game(request, token, email):
 
     solved = make_board()
     unsolved = copy.deepcopy(solved)
-    solved[random.randint(0, 8)][random.randint(0, 8)] = 0
-    solved[random.randint(0, 8)][random.randint(0, 8)] = 0
-    solved[random.randint(0, 8)][random.randint(0, 8)] = 0
+    unsolved[random.randint(0, 8)][random.randint(0, 8)] = 0
+    unsolved[random.randint(0, 8)][random.randint(0, 8)] = 0
+    unsolved[random.randint(0, 8)][random.randint(0, 8)] = 0
 
     unsolved_json = json.dumps(list(chain.from_iterable(unsolved)))
     solved_json = json.dumps(list(chain.from_iterable(solved)))
