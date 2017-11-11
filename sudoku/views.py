@@ -11,7 +11,6 @@ from django.core.exceptions import SuspiciousOperation
 from sudoku.models import GameUser, Game
 from sudoku.generator import make_board
 
-from ciscosparkapi.api.messages import MessagesAPI
 
 
 logger = logging.getLogger(__name__)
