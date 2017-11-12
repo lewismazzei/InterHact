@@ -26,25 +26,19 @@
       <div class="card-body">
         <table>
         <tr>
-        <th></th>
-        <th>Patient 1</th>
-        <th>Patient 2</th>
-        <th>Score</th>
+        <th>Time</th>
+        <th>Score (seconds)</th>
         </tr>
         {% for game in user.user1_rel.all %}
         <tr>
-        <td>{{ game.pk }}</td>
-        <td>{{ game.user1.email }}</td>
-        <td>{{ game.user2.email }}</td>
+        <td>{{ game.datetime }}</td>
         <td>{{ game.user1_points }} : {{ game.user2_points }}</td>
         </tr>
         {% endfor %}
         {% for game in user.user2_rel.all %}
         <tr>
-        <td>{{ game.pk }}</td>
-        <td>{{ game.user1.email }}</td>
-        <td>{{ game.user2.email }}</td>
-        <td>{{ game.user1_points }} : {{ game.user2_points }}</td>
+        <td>{{ game.datetime }}</td>
+        <td>{{ game.user2_points }}</td>
         </tr>
         {% endfor %}
         </table>
