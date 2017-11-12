@@ -2,13 +2,11 @@
 // Command: startGame
 //
 
-const Spark = require('node-sparky');
-
-const spark = new Spark({ token: process.env.SPARK_TOKEN });
-
 module.exports = function (controller) {
 
-    controller.hears(["start game"], "direct_message,direct_mention", function (bot, message) {
+    controller.hears(["start"], "direct_message,direct_mention", function (bot, message) {
+
+        console.log(message)
 
         bot.startConversation(message, function (err, convo) {
 
@@ -16,15 +14,7 @@ module.exports = function (controller) {
                 {
                     pattern: "^1|2|3$",
                     callback: function (response, convo) {
-                        convo.say(`Sure! Click this link to start: dbb99cf8.ngrok.io/new/token/email/ Inviting other players now!`);
-                        controller.on('direct_message', function (bot, message) {
-                            console.log(message);
-                            var gameData = JSON.parse(message.text);
-                            var gameId = gameData.game_id;
-                            spark.roomsGet({ type: 'direct' })
-                            .then(rooms => rooms.forEach(room => spark.messageSend(
-                                {roomId: room.id, text: `Someone is looking for a game! Click here.com to join! gameID: ${gameId}` })));
-                        })
+                        convo.say(`Sure! Click this link to start: dbb99cf8.ngrok.io/new/${message.original_message.personId}/${message.original_message.personEmail}/ Inviting other players now!`);
                         convo.next();
                     },
                 },

@@ -8,10 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/bot.js",
-            "env": {
-                "SPARK_TOKEN": "ZTQxNjk5MWEtNTY5Yi00NTE5LTk3OWYtODExYjg1YTE1MzExMTM0YWUxYjEtZjFm"
-            }
+            "program": "${workspaceFolder}/bot"
         }
     ]
 }

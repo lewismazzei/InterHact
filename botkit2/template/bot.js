@@ -68,6 +68,7 @@ controller.setupWebserver(process.env.PORT || 3000, function (err, webserver) {
 
 // Load skills
 var normalizedPath = require("path").join(__dirname, "skills");
+console.log(__dirname);
 require("fs").readdirSync(normalizedPath).forEach(function (file) {
     try {
         require("./skills/" + file)(controller);
