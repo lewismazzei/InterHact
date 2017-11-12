@@ -370,6 +370,7 @@ Sudoku.prototype.gameOver = function(){
     xhttp.send();
     };
 
+
 /**
 Run a new sudoku game
 */
