@@ -363,7 +363,12 @@ Sudoku.prototype.gameOver = function(){
     console.log("finished in " + this.secondsElapsed + " seconds");
     var sudoku_finish = $('<div class="gameover_container"></div>').text("You finished in " + this.secondsElapsed + " seconds");
     sudoku_finish.appendTo('#' + this.id);
-};
+
+    var xhttp = new XMLHttpRequest();
+    var request_text = "/save/" + GLOBALS.GAME_ID + "/" + GLOBALS.ACCESS_TOKEN + "/" + this.secondsElapsed;
+    xhttp.open("GET", request_text, true);
+    xhttp.send();
+    };
 
 /**
 Run a new sudoku game

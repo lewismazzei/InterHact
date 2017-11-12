@@ -49,7 +49,10 @@ def play(request, game_id):
     game = Game.objects.get(pk=game_id)
     return render(request, 'game.html', {
         'board': game.board,
-        'board_solved' : game.board_solved
+        'board_solved': game.board_solved,
+        'access_token': game.user1.access_token,
+        'email': game.user2.email,
+        'game_id': game_id
     })
 
 
@@ -64,5 +67,8 @@ def join(request, game_id, email, token):
 
     return render(request, 'game.html', {
         'board': game.board,
-        'board_solved' : game.board_solved
+        'board_solved' : game.board_solved,
+        'access_token': game.user2.access_token,
+        'email': game.user1.email,
+        'game_id': game_id
     })
