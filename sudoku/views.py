@@ -50,8 +50,11 @@ def play(request, game_id):
     })
 
 
-def join(request, game_id, email, token):
-    user2, created = GameUser.objects.get_or_create(access_token=token, email=email)
+def join(request, game_id, email, token, room):
+    user2, created = GameUser.objects.get_or_create(access_token=token)
+    user2.email = email
+    user2.room = room
+    user2.save()
 
     game = Game.objects.get(pk=game_id)
     game.user2 = user2
@@ -90,11 +93,13 @@ def save(request, game_id, token, score):
                                 "points": game.user1_points,
                                 "token": game.user1.access_token,
                                 "email": game.user1.email,
+                                "room": game.user1.room,
                             },
                             "user2": {
                                 "points": game.user2_points,
                                 "token": game.user2.access_token,
                                 "email": game.user2.email,
+                                "room": game.user2.room,
                             },
                         }))
         # messages.create(toPersonEmail=game.user1.email,
