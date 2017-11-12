@@ -361,8 +361,9 @@ Sudoku.prototype.gameOver = function(){
     this.status = this.END;
 
     console.log("finished in " + this.secondsElapsed + " seconds");
-    var sudoku_finish = $('<div class="gameover_container"></div>').text("You finished in " + this.secondsElapsed + " seconds");
-    sudoku_finish.appendTo('#' + this.id);
+    var sudoku_finish = $(`<div class="gameover_container">You finished in ${this.secondsElapsed} seconds.<br>
+        Check with the bot to see how you did.</div>`);
+    sudoku_finish.appendTo('body');
 
     var xhttp = new XMLHttpRequest();
     var request_text = "/save/" + GLOBALS.GAME_ID + "/" + GLOBALS.ACCESS_TOKEN + "/" + this.secondsElapsed;
