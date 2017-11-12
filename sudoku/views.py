@@ -1,4 +1,3 @@
-import json
 import logging
 import json
 import copy
@@ -6,17 +5,18 @@ import random
 from itertools import chain
 
 from django.shortcuts import render
-from django.core.exceptions import SuspiciousOperation
+from channels import Group
 
 from sudoku.models import GameUser, Game
 from sudoku.generator import make_board
 
+from ciscosparkapi import CiscoSparkAPI
 
 
 logger = logging.getLogger(__name__)
 
 
-def create_game(request, token, email):
+def new(request, token, email):
     user, created = GameUser.objects.get_or_create(access_token=token, email=email)
 
     solved = make_board()
@@ -28,9 +28,13 @@ def create_game(request, token, email):
     unsolved_json = json.dumps(list(chain.from_iterable(unsolved)))
     solved_json = json.dumps(list(chain.from_iterable(solved)))
 
-    Game.objects.create(user1=user, board=unsolved_json, board_solved=solved_json)
+    game = Game.objects.create(user1=user, board=unsolved_json, board_solved=solved_json)
 
-    return render(request, 'waiting.html')
+    messages = CiscoSparkAPI().messages
+    messages.create(toPersonEmail='lauzhack-lewis-test@sparkbot.io',
+                    text=json.dumps({"game_id": game.pk, "token": token, "email": email}))
+
+    return render(request, 'waiting.html', {"game_id": game.pk, "token": token, "email": email})
 
 
 def save_game(request, token_id):
@@ -41,8 +45,23 @@ def add_user(request):
     pass
 
 
-def show_board(request, game_id, token):
+def play(request, game_id):
     game = Game.objects.get(pk=game_id)
+    return render(request, 'game.html', {
+        'board': game.board,
+        'board_solved' : game.board_solved
+    })
+
+
+def join(request, game_id, email, token):
+    user2, created = GameUser.objects.get_or_create(access_token=token, email=email)
+
+    game = Game.objects.get(pk=game_id)
+    game.user2 = user2
+    game.save()
+
+    Group("chat-%s" % game_id).send({"text": "start"})
+
     return render(request, 'game.html', {
         'board': game.board,
         'board_solved' : game.board_solved

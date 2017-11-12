@@ -5,6 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-Waiting for another patient...
+<p>Waiting for another patient...</p>
+<p>Game ID: {{ game_id }}</p>
+<script>
+socket = new WebSocket(`ws://${window.location.host}/{{ game_id }}/`);
+socket.onmessage = e => {
+    window.location = '/play/{{ game_id }}/';
+}
+</script>
 </body>
 </html>
