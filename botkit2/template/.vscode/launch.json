@@ -1,0 +1,17 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/bot.js",
+            "env": {
+                "SPARK_TOKEN": "ZTQxNjk5MWEtNTY5Yi00NTE5LTk3OWYtODExYjg1YTE1MzExMTM0YWUxYjEtZjFm"
+            }
+        }
+    ]
+}
