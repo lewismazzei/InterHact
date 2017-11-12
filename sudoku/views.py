@@ -44,7 +44,7 @@ def play(request, game_id):
     return render(request, 'game.html', {
         'board': game.board,
         'board_solved': game.board_solved,
-        'access_token': game.user1.access_token,
+        'access_token': game.user1.real_access_token,
         'email': game.user2.email,
         'game_id': game_id
     })
@@ -65,7 +65,7 @@ def join(request, game_id, email, token, room):
     return render(request, 'game.html', {
         'board': game.board,
         'board_solved' : game.board_solved,
-        'access_token': game.user2.access_token,
+        'access_token': game.user2.real_access_token,
         'email': game.user1.email,
         'game_id': game_id
     })
