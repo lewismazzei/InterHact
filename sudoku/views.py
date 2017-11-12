@@ -72,10 +72,10 @@ def join(request, game_id, email, token):
 def save(request, game_id, token, score):
     game = Game.objects.get(pk=game_id)
     if game.user1 and game.user1.token == token:
-        user = game.user1
+        game.user1_points = score
+        game.save()
     elif game.user2 and game.user2.token == token:
-        user = game.user2
+        game.user2_points = score
+        game.save()
     else:
         raise SuspiciousOperation()
-    user.score = score
-    user.save()
