@@ -1,0 +1,49 @@
+body {
+    font-family: Verdana, sans-serif;
+    color: #047da8;
+    background: #dbedf4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background:#049FD9;
+    color:white;
+    margin:0px 0px 2px 0px;
+    font-size:20px;
+    padding:2px 1px 5px 1px;
+    text-align:center;
+}
+
+.waiting {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30pt;
+    margin: 100px 0;
+}
+
+table {
+    margin: 10px auto;
+    border-collapse: collapse;
+}
+
+.container {
+    margin: 20px auto;
+}
+
+th {
+    border-bottom: 2px solid #047da8;
+}
+
+th, td {
+    padding: 10px 8px;
+}
+
+.game-id {
+    text-align: center;
+    font-size: small;
+}
+
+@media all and (min-width: 640px){
+    h1 { font-size:50px; }
+}

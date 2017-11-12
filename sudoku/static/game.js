@@ -11,7 +11,8 @@ function Sudoku(params) {
     this.END = 2;
 
     this.board = params.board;
-    this.boardSolution = params.board_solved;
+    this.boardSolution = params.board_solved    ;
+    this.secondsElapsed = 0;
 
     this.id = params.id || 'sudoku_container';
     this.displaySolution = params.displaySolution || 0;
@@ -51,25 +52,6 @@ Sudoku.prototype.timer = function() {
     this.secondsElapsed++;
     $('.time').text( '' + this.secondsElapsed );
   }
-};
-
-/**
-Shuffle array
-*/
-Sudoku.prototype.shuffle = function(array) {
-    var currentIndex   = array.length,
-        temporaryValue = 0,
-        randomIndex = 0;
-
-    while (0 !== currentIndex) {
-        randomIndex   = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue      = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex]  = temporaryValue;
-     }
-
-    return array;
 };
 
 /**
@@ -136,13 +118,14 @@ Sudoku.prototype.drawBoard = function(){
     $('<div></div>').addClass('num note').text('?').appendTo(sudoku_console);
 
     //draw gameover
-    var sudoku_gameover = $('<div class="gameover_container"><div class="gameover">Congratulation! <button class="restart">Play Again</button></div></div>');
+
+
 
     //add all to sudoku container
     sudoku_console_cotainer.appendTo('#'+ this.id).hide();
     sudoku_console.appendTo(sudoku_console_cotainer);
     sudoku_statistics.appendTo('#'+ this.id);
-    sudoku_gameover.appendTo('#'+ this.id).hide();
+
 
     //adjust size
     this.resizeWindow();
@@ -151,7 +134,7 @@ Sudoku.prototype.drawBoard = function(){
 Sudoku.prototype.resizeWindow = function(){
     console.time("resizeWindow");
 
-    var screen = { w: $(window).width(), h: $(window).height() };
+    var screen = { w: $(window).width(), h: window.innerHeight };
 
     //adjust the board
     var b_pos = $('#'+ this.id +' .sudoku_board').offset(),
@@ -377,8 +360,17 @@ Sudoku.prototype.gameOver = function(){
     console.log('GAME OVER!');
     this.status = this.END;
 
-    $('#'+ this.id +' .gameover_container').show();
-};
+    console.log("finished in " + this.secondsElapsed + " seconds");
+    var sudoku_finish = $(`<div class="gameover_container">You finished in ${this.secondsElapsed} seconds.<br>
+        Check with the bot to see how you did.</div>`);
+    sudoku_finish.appendTo('body');
+
+    var xhttp = new XMLHttpRequest();
+    var request_text = "/save/" + GLOBALS.GAME_ID + "/" + GLOBALS.ACCESS_TOKEN + "/" + this.secondsElapsed;
+    xhttp.open("GET", request_text, true);
+    xhttp.send();
+    };
+
 
 /**
 Run a new sudoku game
@@ -461,20 +453,6 @@ $(function() {
                });
 
     game.run();
-
-    $('#sidebar-toggle').on('click', function(e){
-      $('#sudoku_menu').toggleClass("open-sidebar");
-    });
-
-     //restart game
-    $('#'+ game.id +' .restart').on('click', function(){
-        game.init().run();
-    });
-
-    $('#sudoku_menu .restart').on('click', function(){
-        game.init().run();
-        $('#sudoku_menu').removeClass('open-sidebar');
-    });
 
     console.timeEnd("loading time");
 });
