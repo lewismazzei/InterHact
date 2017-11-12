@@ -12,6 +12,7 @@ function Sudoku(params) {
 
     this.board = params.board;
     this.boardSolution = params.board_solved    ;
+    this.secondsElapsed = 0;
 
     this.id = params.id || 'sudoku_container';
     this.displaySolution = params.displaySolution || 0;
@@ -117,13 +118,14 @@ Sudoku.prototype.drawBoard = function(){
     $('<div></div>').addClass('num note').text('?').appendTo(sudoku_console);
 
     //draw gameover
-    var sudoku_gameover = $('<div class="gameover_container"><div class="gameover">Congratulation! <button class="restart">Play Again</button></div></div>');
+
+
 
     //add all to sudoku container
     sudoku_console_cotainer.appendTo('#'+ this.id).hide();
     sudoku_console.appendTo(sudoku_console_cotainer);
     sudoku_statistics.appendTo('#'+ this.id);
-    sudoku_gameover.appendTo('#'+ this.id).hide();
+
 
     //adjust size
     this.resizeWindow();
@@ -358,7 +360,9 @@ Sudoku.prototype.gameOver = function(){
     console.log('GAME OVER!');
     this.status = this.END;
 
-    $('#'+ this.id +' .gameover_container').show();
+    console.log("finished in " + this.secondsElapsed + " seconds");
+    var sudoku_finish = $('<div class="gameover_container"></div>').text("You finished in " + this.secondsElapsed + " seconds");
+    sudoku_finish.appendTo('#' + this.id);
 };
 
 /**
@@ -442,20 +446,6 @@ $(function() {
                });
 
     game.run();
-
-    $('#sidebar-toggle').on('click', function(e){
-      $('#sudoku_menu').toggleClass("open-sidebar");
-    });
-
-     //restart game
-    $('#'+ game.id +' .restart').on('click', function(){
-        game.init().run();
-    });
-
-    $('#sudoku_menu .restart').on('click', function(){
-        game.init().run();
-        $('#sudoku_menu').removeClass('open-sidebar');
-    });
 
     console.timeEnd("loading time");
 });
