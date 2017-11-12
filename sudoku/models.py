@@ -13,3 +13,4 @@ class Game(models.Model):
     user2_points = models.IntegerField(null=True, blank=True)
     board = models.TextField(null=True, blank=True)
     board_solved = models.TextField(null=True, blank=True)
+    datetime = models.DateTimeField(auto_now_add=True, null=True, blank=True)
