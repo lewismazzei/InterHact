@@ -24,6 +24,6 @@ urlpatterns = [
     url(r'^play/(?P<game_id>[0-9]+)/$', views.play),
     url(r'^join/(?P<game_id>[0-9]+)/(?P<email>[A-Za-z0-9.@-]+)/(?P<token>[A-Za-z0-9]+)/$', views.join),
     url(r'^save/(?P<game_id>[0-9]+)/(?P<token>[A-Za-z0-9]+)/(?P<score>[0-9]+)/$', views.save),
-    url(r'^add_user/$', views.add_user),
-    url(r'^save_game/$', views.save_game),
+    url(r'^results/$', views.results),
+    url(r'^patients/$', views.patients),
 ]

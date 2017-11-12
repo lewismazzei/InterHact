@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Results</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "waiting.css" %}">
+</head>
+<body>
+<h1 id="sudoku_title">SUDOKU Result List</h1>
+<table>
+    <tr>
+        <th></th>
+        <th>Patient 1</th>
+        <th>Patient 2</th>
+        <th>Score</th>
+    </tr>
+    {% for game in games %}
+        <tr>
+        <td>{{ game.pk }}</td>
+        <td>{{ game.user1.email }}</td>
+        <td>{{ game.user2.email }}</td>
+        <td>{{ game.user1_points }} : {{ game.user2_points }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
