@@ -20,8 +20,9 @@ from sudoku import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^create_game/(?P<token>[A-Za-z0-9]+)/(?P<email>[A-Za-z0.9@.]+)/$', views.create_game),
+    url(r'^new/(?P<token>[A-Za-z0-9]+)/(?P<email>[A-Za-z0-9.@-]+)/$', views.new),
+    url(r'^play/(?P<game_id>[0-9]+)/$', views.play),
+    url(r'^join/(?P<game_id>[0-9]+)/(?P<email>[A-Za-z0-9.@-]+)/(?P<token>[A-Za-z0-9]+)/$', views.join),
     url(r'^add_user/$', views.add_user),
     url(r'^save_game/$', views.save_game),
-    url(r'^show_board/(?P<game_id>[0-9]+)/(?P<token>[A-Za-z0-9]+)/$', views.show_board),
 ]
