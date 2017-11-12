@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "waiting.css" %}">
 </head>
 <body>
-<p>Waiting for another patient...</p>
-<p>Game ID: {{ game_id }}</p>
+<h1 id="sudoku_title">SUDOKU</h1>
+<div class="waiting">Waiting for another patient to join the game</div>
+<div class="game-id">Game ID: {{ game_id }}</div>
 <script>
 socket = new WebSocket(`ws://${window.location.host}/{{ game_id }}/`);
 socket.onmessage = e => {
