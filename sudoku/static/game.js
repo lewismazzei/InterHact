@@ -134,7 +134,7 @@ Sudoku.prototype.drawBoard = function(){
 Sudoku.prototype.resizeWindow = function(){
     console.time("resizeWindow");
 
-    var screen = { w: $(window).width(), h: $(window).height() };
+    var screen = { w: $(window).width(), h: window.innerHeight };
 
     //adjust the board
     var b_pos = $('#'+ this.id +' .sudoku_board').offset(),
