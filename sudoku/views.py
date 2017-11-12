@@ -5,6 +5,7 @@ import random
 from itertools import chain
 
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.core.exceptions import SuspiciousOperation
 from channels import Group
 
@@ -78,10 +79,35 @@ def join(request, game_id, email, token):
 def save(request, game_id, token, score):
     game = Game.objects.get(pk=game_id)
     if game.user1 and game.user1.access_token == token:
+        print("saving first user")
         game.user1_points = score
         game.save()
     elif game.user2 and game.user2.access_token == token:
+        print("saving second user")
         game.user2_points = score
         game.save()
     else:
         raise SuspiciousOperation()
+
+    if game.user1_points is not None and game.user2_points is not None:
+        print('Sending the results to bot')
+        messages = CiscoSparkAPI().messages
+        messages.create(toPersonEmail='lauzhack-lewis-test@sparkbot.io',
+                        text=json.dumps({
+                            "user1": {
+                                "points": game.user1_points,
+                                "token": game.user1.access_token,
+                                "email": game.user1.email,
+                            },
+                            "user2": {
+                                "points": game.user2_points,
+                                "token": game.user2.access_token,
+                                "email": game.user2.email,
+                            },
+                        }))
+        # messages.create(toPersonEmail=game.user1.email,
+        #                 text="You got %d" % game.user1_points)
+        # messages.create(toPersonEmail=game.user2.email,
+        #                 text="You got %d" % game.user2_points)
+
+    return HttpResponse()
