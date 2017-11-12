@@ -39,14 +39,6 @@ def new(request, token, email):
     return render(request, 'waiting.html', {"game_id": game.pk, "token": token, "email": email})
 
 
-def save_game(request, token_id):
-    pass
-
-
-def add_user(request):
-    pass
-
-
 def play(request, game_id):
     game = Game.objects.get(pk=game_id)
     return render(request, 'game.html', {
@@ -111,3 +103,13 @@ def save(request, game_id, token, score):
         #                 text="You got %d" % game.user2_points)
 
     return HttpResponse()
+
+
+def results(request):
+    games = Game.objects.order_by('-pk')
+    return render(request, 'results.html', {'games': games})
+
+
+def patients(request):
+    users = GameUser.objects.all()
+    return render(request, 'patients.html', {'patients': users})
