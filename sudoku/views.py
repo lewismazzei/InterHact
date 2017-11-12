@@ -5,6 +5,7 @@ import random
 from itertools import chain
 
 from django.shortcuts import render
+from django.core.exceptions import SuspiciousOperation
 from channels import Group
 
 from sudoku.models import GameUser, Game
@@ -72,3 +73,15 @@ def join(request, game_id, email, token):
         'email': game.user1.email,
         'game_id': game_id
     })
+
+
+def save(request, game_id, token, score):
+    game = Game.objects.get(pk=game_id)
+    if game.user1 and game.user1.token == token:
+        user = game.user1
+    elif game.user2 and game.user2.token == token:
+        user = game.user2
+    else:
+        raise SuspiciousOperation()
+    user.score = score
+    user.save()
